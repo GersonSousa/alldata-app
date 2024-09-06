@@ -4,6 +4,7 @@ import Login from '@/pages/Auth/Login.vue';
 import Forgot from '@/pages/Auth/Forgot.vue';
 import Reset from '@/pages/Auth/Reset.vue';
 import Home from '@/pages/Home/Home.vue';
+import Error from '@/pages/Error/Error.vue';
 
 const routes = [
   {
@@ -29,6 +30,13 @@ const routes = [
     name: 'Home',
     component: Home,
     meta: { title: 'All | Home' },
+  },
+
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'Error',
+    component: Error,
+    meta: { title: 'All | Página não encontrada' },
   },
 ];
 

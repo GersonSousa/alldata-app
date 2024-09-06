@@ -18,6 +18,7 @@ const handleSubmit = async () => {
     const data = await auth.forgot({ email: email.value });
 
     errorMessage.value = 'Um link de redefinição de senha foi enviado para seu endereço de e-mail.';
+    email.value = '';
   } catch (error) {
     console.error(error);
     errorMessage.value = 'Não foi possivel te enviar o link de redefinição de senha neste momento';
