@@ -13,7 +13,7 @@ const isLoading = ref(false);
 const handleSubmit = async () => {
   try {
     errorMessage.value = '';
-    isLoading.value = true; 
+    isLoading.value = true;
 
     const data = await auth.forgot({ email: email.value });
 
