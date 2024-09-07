@@ -29,4 +29,14 @@ const reset = async (id, forgotToken, data) => {
   }
 };
 
-export default { login, forgot, reset };
+const home = async () => {
+  try {
+    const response = await api.get('users/home');
+    return response.data;
+  } catch (error) {
+    const errorMessage = error.response?.data?.message || 'Failed to get home data';
+    throw new Error(errorMessage);
+  }
+};
+
+export default { login, forgot, reset, home };
