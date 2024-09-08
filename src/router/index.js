@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import Cookies from 'js-cookie';
 
 import Login from '@/pages/Auth/Login.vue';
 import Forgot from '@/pages/Auth/Forgot.vue';
@@ -29,7 +30,7 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: Home,
-    meta: { title: 'All | Home' },
+    meta: { title: 'All | Home', requiresAuth: true },
   },
 
   {
@@ -48,6 +49,15 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const defaultTitle = 'All';
   document.title = to.meta.title || defaultTitle;
+
+  if (to.meta.requiresAuth) {
+    const token = Cookies.get('token');
+    if (!token) {
+      return next({ name: 'Login' });
+    } else {
+      next();
+    }
+  }
   next();
 });
 
