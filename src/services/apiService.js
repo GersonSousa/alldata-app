@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_ROOT_API,
+  baseURL: 'https://alldata-api.onrender.com/api/v1/',
   timeout: 10000,
   withCredentials: true,
   headers: {
