@@ -32,7 +32,6 @@ const routes = [
     component: Home,
     meta: { title: 'All | Home', requiresAuth: true },
   },
-
   {
     path: '/:pathMatch(.*)*',
     name: 'Error',
@@ -48,16 +47,15 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const defaultTitle = 'All';
-  document.title = to.meta.title || defaultTitle;
+  document.title = to.meta.title ? to.meta.title : defaultTitle;
 
   if (to.meta.requiresAuth) {
     const token = Cookies.get('token');
     if (!token) {
       return next({ name: 'Login' });
-    } else {
-      next();
     }
   }
+
   next();
 });
 

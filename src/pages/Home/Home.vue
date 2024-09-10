@@ -1,4 +1,5 @@
 <script setup>
+import Header from '@/components/Header.vue';
 import auth from '@/services/auth';
 
 import { onMounted, ref } from 'vue';
@@ -18,7 +19,7 @@ onMounted(() => {
 });
 </script>
 <template>
-  <h1>Home</h1>
+  <Header />
   <pre>{{ home }}</pre>
 </template>
 <style scoped></style>
