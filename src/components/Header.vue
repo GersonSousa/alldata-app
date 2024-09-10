@@ -1,5 +1,5 @@
 <script setup>
-import logo from '@/assets/images/logoBranca.png';
+import logo from '@/assets/images/LogoBranca.png';
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 
