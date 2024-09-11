@@ -1,7 +1,14 @@
+import Login from '@/pages/Auth/Login.vue';
 import Home from '@/pages/Home/Home.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
+  {
+    path: '/',
+    name: 'Login',
+    component: Login,
+    meta: { title: 'All | Login' },
+  },
   {
     path: '/home',
     name: 'Home',
