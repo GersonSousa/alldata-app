@@ -1,15 +1,19 @@
 <script setup>
 import userService from '@/services/users';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const users = ref('');
 
 async function fetchUsers() {
-  const response = await users.getUsers();
-  users.value = response.data;
+  try {
+    const response = await userService.getUsers();
+    users.value = response.data;
+  } catch (error) {
+    console.error('Erro ao buscar usuários:', error);
+  }
 }
 
-fetchUsers();
+onMounted(fetchUsers);
 </script>
 <template>
   <pre>{{ users }}</pre>
