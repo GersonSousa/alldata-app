@@ -1,5 +1,5 @@
 <script setup>
-import users from '@/services/users';
+import userService from '@/services/users';
 import { ref } from 'vue';
 
 const users = ref('');
