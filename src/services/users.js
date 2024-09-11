@@ -9,3 +9,5 @@ const getUsers = async () => {
     throw error;
   }
 };
+
+export default { getUsers };
