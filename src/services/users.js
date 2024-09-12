@@ -1,8 +1,13 @@
 import instance from './apiService';
 
 const getUsers = async () => {
-  const response = await instance.get('/users');
-  return response.data;
+  try {
+    const response = await instance.get('/users');
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;  
+  }
 };
 
 export default { getUsers };
