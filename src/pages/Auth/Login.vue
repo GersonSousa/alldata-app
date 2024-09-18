@@ -3,26 +3,6 @@ import logo from '@/assets/images/logo.png';
 import background from '@/assets/images/background.svg';
 import BaseInput from '@/components/input.vue';
 import BaseButton from '@/components/button.vue';
-
-import auth from '@/services/auth';
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-
-const email = ref('');
-const password = ref('');
-const router = useRouter();
-
-const login = async () => {
-  try {
-    const user = await auth.login({
-      email: email.value,
-      password: password.value,
-    });
-    router.push('/home');
-  } catch (error) {
-    console.error('Falha ao realizar login:', error);
-  }
-};
 </script>
 <template>
   <div class="page-login">
@@ -35,26 +15,13 @@ const login = async () => {
         </div>
       </div>
       <main>
-        <form @submit.prevent="login">
-          <BaseInput
-            label="Email"
-            id="email"
-            type="email"
-            placeholder="Seu e-mail aqui"
-            v-model="email"
-          />
-          <BaseInput
-            label="Senha"
-            id="password"
-            type="password"
-            placeholder="Sua senha aqui"
-            v-model="password"
-          />
+        <form>
+          <BaseInput label="Email" id="email" type="email" placeholder="Seu e-mail aqui" />
+          <BaseInput label="Senha" id="password" type="password" placeholder="Sua senha aqui" />
           <div class="form-action">
             <a href="/forgot" class="forgot-password">Esqueceu a senha?</a>
           </div>
-
-          <BaseButton type="submit"> Entrar </BaseButton>
+          <BaseButton type="submit"> Entrar</BaseButton>
         </form>
       </main>
     </div>

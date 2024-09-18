@@ -1,20 +1,5 @@
-<script setup>
-import userService from '@/services/users';
-import { ref } from 'vue';
-
-const users = ref([]);
-
-async function fetchUsers() {
-  try {
-    users.value = await userService.getUsers();
-  } catch (error) {
-    console.error('Error fetching users:', error);
-  }
-}
-
-fetchUsers();
-</script>
+<script setup></script>
 <template>
-  <pre>{{ users }}</pre>
+  <h1>Home</h1>
 </template>
 <style scoped></style>
