@@ -1,8 +1,32 @@
 <script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import AuthService from '@/services/AuthService';
+
 import logo from '@/assets/images/logo.png';
 import background from '@/assets/images/background.svg';
 import BaseInput from '@/components/input.vue';
 import BaseButton from '@/components/button.vue';
+
+const email = ref('');
+const password = ref('');
+const errorMessage = ref('');
+const isLoading = ref(false);
+const router = useRouter();
+
+const Handlelogin = async () => {
+  try {
+    errorMessage.value = '';
+    isLoading.value = true;
+    await AuthService.login({ email: email.value, password: password.value });
+
+    router.push('/home');
+  } catch (error) {
+    errorMessage.value = 'Falha no login. Por favor verifique seu e-mail e senha.';
+  } finally {
+    isLoading.value = false;
+  }
+};
 </script>
 <template>
   <div class="page-login">
@@ -15,13 +39,29 @@ import BaseButton from '@/components/button.vue';
         </div>
       </div>
       <main>
-        <form>
-          <BaseInput label="Email" id="email" type="email" placeholder="Seu e-mail aqui" />
-          <BaseInput label="Senha" id="password" type="password" placeholder="Sua senha aqui" />
+        <form @submit.prevent="Handlelogin">
+          <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+          <BaseInput
+            label="Email"
+            id="email"
+            type="email"
+            placeholder="Seu e-mail aqui"
+            v-model="email"
+          />
+          <BaseInput
+            label="Senha"
+            id="password"
+            type="password"
+            placeholder="Sua senha aqui"
+            v-model="password"
+          />
           <div class="form-action">
             <a href="/forgot" class="forgot-password">Esqueceu a senha?</a>
           </div>
-          <BaseButton type="submit"> Entrar</BaseButton>
+          <BaseButton type="submit" :disabled="isLoading">
+            <template v-if="isLoading">Carregando...</template>
+            <template v-else>Entrar</template>
+          </BaseButton>
         </form>
       </main>
     </div>
