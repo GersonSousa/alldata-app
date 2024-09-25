@@ -18,10 +18,13 @@ const Handlelogin = async () => {
   try {
     errorMessage.value = '';
     isLoading.value = true;
-    await AuthService.login({ email: email.value, password: password.value });
+    const user = await AuthService.login({ email: email.value, password: password.value });
+
+    console.log(user);
 
     router.push('/home');
   } catch (error) {
+    console.error(error);
     errorMessage.value = 'Falha no login. Por favor verifique seu e-mail e senha.';
   } finally {
     isLoading.value = false;
