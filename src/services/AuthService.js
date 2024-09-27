@@ -12,4 +12,15 @@ const login = async (data) => {
   }
 };
 
-export default { login };
+const checkAuth = async () => {
+  try {
+    const response = await instance.get('/auth/check-auth');
+    return response.data.authenticated;
+  } catch (error) {
+    const errorMessage = error.response?.data?.message || 'Erro ao verificar autenticação.';
+    console.error('Erro ao verificar autenticação:', errorMessage);
+    return false;
+  }
+};
+
+export default { login, checkAuth };

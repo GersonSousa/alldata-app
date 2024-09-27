@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import AuthService from '@/services/AuthService';
+
 import Login from '@/pages/Auth/Login.vue';
 import Reset from '@/pages/Auth/Reset.vue';
 import Forgot from '@/pages/Auth/Forgot.vue';
@@ -29,7 +31,7 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: Home,
-    meta: { title: 'All | Home' },
+    meta: { title: 'All | Home', requiresAuth: true },
   },
   {
     path: '/:catchAll(.*)',
@@ -44,8 +46,15 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   document.title = to.meta?.title ?? 'All';
+
+  if (to.meta.requiresAuth) {
+    const authenticated = await AuthService.checkAuth();
+    if (!authenticated) {
+      return next({ name: 'Login' });
+    }
+  }
   next();
 });
 
