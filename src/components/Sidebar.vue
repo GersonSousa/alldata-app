@@ -1,6 +1,32 @@
 <script setup>
 import logoBranca from '@/assets/images/Single.png';
 import 'primeicons/primeicons.css';
+
+import AuthService from '@/services/AuthService';
+import { ref, onMounted } from 'vue';
+
+const name = ref('');
+const email = ref('');
+const profilePicture = ref('https://avatars.githubusercontent.com/u/33321518?v=4&size=64');
+
+const userCurrent = async () => {
+  try {
+    const currentUser = await AuthService.checkAuth();
+    name.value = currentUser.name;
+    email.value = currentUser.email;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const logout = async () => {
+  await AuthService.logout();
+  window.location.href = '/';
+};
+
+onMounted(() => {
+  userCurrent();
+});
 </script>
 <template>
   <aside>
@@ -29,19 +55,16 @@ import 'primeicons/primeicons.css';
       <div id="profile">
         <div id="profile-info">
           <div id="user-photo">
-            <img
-              src="https://avatars.githubusercontent.com/u/33321518?v=4&size=64"
-              alt="User photo"
-            />
+            <img :src="profilePicture" alt="User photo" />
           </div>
           <div id="text">
-            <p class="profile-name">Antonio Gerson de Sousa Silva</p>
-            <p class="profile-email">agerson3@gmail.com</p>
-            <p class="profile-job">Web Developer</p>
+            <p class="profile-name">{{ name }}</p>
+            <p class="profile-email">{{ email }}</p>
+            <p class="profile-job">{{ role }}</p>
           </div>
         </div>
       </div>
-      <button class="logout">
+      <button class="logout" @click="logout">
         <i class="pi pi-sign-out" />
       </button>
     </div>
@@ -117,7 +140,7 @@ aside ul li p {
 
 @media (min-width: 700px) {
   aside {
-    width: 28rem;
+    width: 30rem;
     text-align: center;
     position: relative;
     transition: all 1s ease-out;
@@ -172,7 +195,7 @@ aside ul li p {
     border-radius: 1rem;
   }
 
-  .logout{
+  .logout {
     margin-left: 1.5rem;
   }
 }

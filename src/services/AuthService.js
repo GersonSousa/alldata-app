@@ -15,7 +15,7 @@ const login = async (data) => {
 const checkAuth = async () => {
   try {
     const response = await instance.get('/auth/check-auth');
-    return response.data.authenticated;
+    return response.data.user;
   } catch (error) {
     const errorMessage = error.response?.data?.message || 'Erro ao verificar autenticação.';
     console.error('Erro ao verificar autenticação:', errorMessage);
@@ -23,4 +23,15 @@ const checkAuth = async () => {
   }
 };
 
-export default { login, checkAuth };
+const logout = async () => {
+  try {
+    await instance.post('/auth/logout');
+    return true;
+  } catch (error) {
+    const errorMessage = error.response?.data?.message || 'Falha ao fazer logout.';
+    console.error('Erro ao fazer logout:', errorMessage);
+    return false;
+  }
+};
+
+export default { login, checkAuth, logout };
